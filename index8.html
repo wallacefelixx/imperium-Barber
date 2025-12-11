@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Imperium | Premium</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS GERAIS --- */
+        :root {
+            --color-gold: #D4CDC1;
+            --color-gold-hover: #b8b0a4;
+            --color-red-agenda: #c0392b;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --bg-dark: #111;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: var(--font-title);
+            color: var(--color-gold);
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: rgba(17, 17, 17, 0.95) !important;
+            border-bottom: 1px solid rgba(212, 205, 193, 0.1);
+            padding: 15px 0;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+        .navbar-brand { font-weight: 700; letter-spacing: 2px; font-size: 1.5rem; }
+        .nav-link { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.7) !important; }
+        .nav-link:hover, .nav-link.active { color: var(--color-gold) !important; }
+        .btn-gold-outline { border: 1px solid var(--color-gold); color: var(--color-gold); text-transform: uppercase; border-radius: 0; transition: all 0.3s; }
+        .btn-gold-outline:hover { background-color: var(--color-gold); color: #000; border-color: var(--color-gold); }
+
+        /* --- CLASSES UTILITÁRIAS --- */
+        .btn-gold {
+            border: 1px solid var(--color-gold);
+            background-color: var(--color-gold);
+            color: #000;
+            border-radius: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            transition: 0.3s;
+            padding: 12px 35px;
+        }
+        .btn-gold:hover {
+            background-color: #fff;
+            border-color: #fff;
+        }
+        .section-padding { padding: 80px 0; }
+        .divider { width: 60px; height: 3px; background-color: var(--color-gold); margin: 15px auto 40px; }
+
+        /* --- 1. HERO SECTION (COM CARROSSEL DE FUNDO) --- */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-bg-slider {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+        }
+        .hero-bg-slider .swiper-slide {
+            background-size: cover; background-position: center;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; }
+
+        /* --- 2. SEÇÃO SOBRE (COM CARROSSEL DE FUNDO) --- */
+        .sobre-bg-slider {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+        }
+        .sobre-bg-slider .swiper-slide {
+            background-size: cover; background-position: center;
+        }
+        .sobre-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); /* Sombra bem escura para ler o texto */
+            z-index: 1;
+        }
+        .sobre-content { position: relative; z-index: 2; }
+
+        /* --- BANNER PARALLAX (Efeito Lateral) --- */
+        .banner-parallax {
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+        }
+        .banner-parallax::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4); z-index: 1;
+        }
+        .banner-content { position: relative; z-index: 2; text-align: center; }
+        /* A imagem de fundo que se move */
+        .scroll-fx-bg {
+            position: absolute; top: 0; left: -10%; width: 140%; height: 100%;
+            background-size: cover; background-position: center; z-index: 0;
+            will-change: transform; 
+        }
+
+        /* --- SERVIÇOS CARDS --- */
+        .service-card {
+            background: #1a1a1a; padding: 30px; border: 1px solid #333; transition: 0.3s; height: 100%;
+        }
+        .service-card:hover { border-color: var(--color-gold); transform: translateY(-5px); }
+        .icon-gold { font-size: 2.5rem; color: var(--color-gold); margin-bottom: 15px; }
+
+        /* --- GALERIA CARROSSEL (3D) --- */
+        .gallery-section .swiper { width: 100%; padding-top: 50px; padding-bottom: 50px; }
+        .gallery-section .swiper-slide {
+            background-position: center; background-size: cover; width: 300px; height: 400px; border: 1px solid #333;
+        }
+        .gallery-section .swiper-slide img {
+            display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.5s;
+        }
+        .gallery-section .swiper-slide-active img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* --- FOOTER --- */
+        footer { border-top: 1px solid #333; background: #000; }
+
+        /* --- BOTÃO FLUTUANTE (Agenda) --- */
+        .btn-floating-agenda {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            width: 65px; height: 65px; border-radius: 50%;
+            background-color: var(--color-red-agenda); color: #fff;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease; animation: pulse-red 2s infinite;
+        }
+        .btn-floating-agenda i { font-size: 1.6rem; }
+        .btn-floating-agenda:hover { color: #fff; transform: scale(1.1); }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(192, 57, 43, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); }
+        }
+        @media (max-width: 768px) {
+            .btn-floating-agenda { bottom: 20px; right: 20px; width: 55px; height: 55px; }
+            .btn-floating-agenda i { font-size: 1.3rem; }
+        }
+
+        /* --- CSS ATUALIZADO DA GALERIA --- */
+    .gallery-section .swiper {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .gallery-section .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 400px;
+        /* CONFIGURAÇÕES DE BORDA E ARREDONDAMENTO */
+        border: 2px solid #333; /* Borda mais visível */
+        border-radius: 20px;    /* Bordas bem arredondadas */
+        overflow: hidden;       /* Garante que a imagem respeite o arredondamento */
+        transition: all 0.4s ease; /* Suavidade na animação da borda */
+    }
+
+    .gallery-section .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(100%); /* Começa preto e branco */
+        transition: all 0.6s ease; /* Transição suave do zoom e cor */
+    }
+
+    /* --- EFEITOS QUANDO O SLIDE ESTÁ ATIVO (NO CENTRO) --- */
+    .gallery-section .swiper-slide-active {
+        border-color: var(--color-gold);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra suave */
+    }
+    
+    .gallery-section .swiper-slide-active img {
+        filter: grayscale(0%); /* Fica colorido */
+        transform: scale(1.05); /* Zoom leve */
+    }
+
+    /* --- EFEITO AO PASSAR O MOUSE (HOVER) --- */
+    .gallery-section .swiper-slide:hover {
+        border-color: var(--color-gold); /* Borda fica dourada */
+        box-shadow: 0 0 20px rgba(212, 205, 193, 0.4); /* Brilho dourado externo */
+        z-index: 10; /* Traz para frente */
+    }
+
+    .gallery-section .swiper-slide:hover img {
+        filter: grayscale(0%); /* Fica colorido */
+        transform: scale(1.15); /* Zoom mais forte (aproximação) */
+    }
+    </style>
+</head>
+<body id="home">
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">IMPERIUM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav gap-4 align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sobre">A Barbearia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#unidades">Unidades</a></li>
+                    <li class="nav-item"><a href="agendamento.html" class="btn btn-gold-outline btn-sm px-4">Agendar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="swiper heroSwiper hero-bg-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2070&auto=format&fit=crop');"></div>
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1503951914875-befca64f8900?q=80&w=2070&auto=format&fit=crop');"></div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="display-2 fw-bold mb-4">Tradição & Estilo</h1>
+            <p class="lead text-white-50 mb-5">O cuidado que você merece, com a excelência que a gente garante.</p>
+            <a href="#servicos" class="btn btn-gold">Nossos Serviços</a>
+        </div>
+    </header>
+
+    <section id="sobre" class="section-padding position-relative d-flex align-items-center" style="min-height: 600px; overflow: hidden;">
+        
+        <div class="swiper sobreSwiper sobre-bg-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background-image: url('img/banner\ 01.jpg');"></div>
+                <div class="swiper-slide" style="background-image: url('img/banner\ 02.jpg');"></div>
+                <div class="swiper-slide" style="background-image: url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2070&auto=format&fit=crop');"></div>
+            </div>
+        </div>
+
+        <div class="sobre-overlay"></div>
+
+        <div class="container sobre-content text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="display-5 mb-3">Sobre Nós</h2>
+                    <div class="divider mx-auto"></div>
+                    
+                    <h3 class="mb-4 text-white">Tradição desde 1992</h3>
+                    <p class="lead text-light mb-4">
+                        A Barbearia Imperium é referência em sofisticação e qualidade. Fundada para atender ao homem moderno que não abre mão da tradição, oferecemos um ambiente onde o clássico encontra o contemporâneo.
+                    </p>
+                    <p class="text-white-50 mb-5">
+                        Nossos profissionais são treinados nas melhores técnicas internacionais para garantir que cada corte seja uma experiência única de estilo e bem-estar.
+                    </p>
+                    
+                    <a href="#" class="btn btn-gold-outline">Saiba mais sobre nossa história</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner-parallax">
+        <div class="scroll-fx-bg js-scroll-bg direction-right" style="background-image: url('img/bannerequipe.png');"></div>
+        <div class="banner-content">
+            <h2 class="display-4">Ambiente Exclusivo</h2>
+            <p class="lead text-white-50">Onde cada detalhe foi pensado para você.</p>
+        </div>
+    </section>
+
+    <section id="galeria" class="gallery-section py-5 bg-dark">
+        <div class="container-fluid">
+            <div class="text-center mb-5">
+                <h2 class="display-5">Nossa Galeria</h2>
+                <div class="divider mx-auto"></div>
+            </div>
+            <div class="swiper gallerySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="img/IMG1.png" /></div>
+                    <div class="swiper-slide"><img src="img/IMG 2.png" /></div>
+                    <div class="swiper-slide"><img src="img/IMG3.png" /></div>
+                    <div class="swiper-slide"><img src="img/IMG4.png" /></div>
+                    <div class="swiper-slide"><img src="img/IMG6.png" /></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="section-padding bg-black">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5">Nossos Serviços</h2>
+            <div class="divider mx-auto"></div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3">
+                <a href="corte.html" class="service-card text-center d-block text-decoration-none">
+                    <i class="bi bi-scissors icon-gold"></i>
+                    <h4>Corte</h4>
+                    <p class="text-secondary small">Técnicas clássicas e modernas.</p>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="barbaspremiun.html" class="service-card text-center d-block text-decoration-none">
+                    <i class="bi bi-magic icon-gold"></i>
+                    <h4>Barba</h4>
+                    <p class="text-secondary small">Toalha quente e navalha.</p>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="diadonoivo.html" class="service-card text-center d-block text-decoration-none">
+                    <i class="bi bi-suit-heart icon-gold"></i>
+                    <h4>Dia do Noivo</h4>
+                    <p class="text-secondary small">Experiência exclusiva.</p>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="camuflagem.html" class="service-card text-center d-block text-decoration-none">
+                    <i class="bi bi-palette icon-gold"></i>
+                    <h4>Camuflagem</h4>
+                    <p class="text-secondary small">Disfarce natural dos fios.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="banner-parallax">
+        <div class="scroll-fx-bg js-scroll-bg direction-left" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2070&auto=format&fit=crop'); left: -20%;"></div>
+        <div class="banner-content">
+            <h2 class="display-4">Profissionais de Elite</h2>
+            <a href="conheçaaequipe.html" class="btn btn-gold-outline">Conheça a Equipe</a>
+        </div>
+    </section>
+
+    <section id="unidades" class="section-padding">
+        <div class="container text-center">
+            <h2 class="display-5">Nossas Unidades</h2>
+            <div class="divider mx-auto"></div>
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <h4 class="text-white">Divinópolis-MG</h4>
+                    <p class="text-secondary">Av. Prof. Mário Werneck</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-white">Belo Horizonte-MG</h4>
+                    <p class="text-secondary">Rua Rosinha Sigaud</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-white">São Paulo-SP</h4>
+                    <p class="text-secondary">Alameda Oscar Niemeyer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-5">
+        <div class="container text-center">
+            <h3 class="mb-4 text-uppercase fw-bold" style="color: var(--color-gold);">IMPERIUM Barbearia</h3>
+            <div class="d-flex justify-content-center gap-4 mb-4 fs-4">
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-whatsapp"></i></a>
+            </div>
+            <p class="text-secondary small mb-1">Horário de Atendimento: Seg a Sex: 09h às 20h | Sáb: 09h às 18h</p>
+            <hr class="border-secondary opacity-25 my-4">
+            <p class="text-secondary x-small mb-0">&copy; 2025 Barbearia Imperium. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="agendamento.html" class="btn-floating-agenda" title="Agendar Horário">
+        <i class="bi bi-calendar3"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        // 1. CARROSSEL DE FUNDO - HERO (TOPO)
+        const heroSwiper = new Swiper(".heroSwiper", {
+            effect: "fade", 
+            loop: true,
+            speed: 1500,
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            allowTouchMove: false
+        });
+
+        // 2. CARROSSEL DE FUNDO - SEÇÃO SOBRE (NOVO)
+        const sobreSwiper = new Swiper(".sobreSwiper", {
+            effect: "fade",
+            loop: true,
+            speed: 2000,
+            autoplay: { delay: 3500, disableOnInteraction: false },
+            allowTouchMove: false
+        });
+
+        // 3. CARROSSEL GALERIA (3D)
+        const gallerySwiper = new Swiper(".gallerySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            loop: true,
+            coverflowEffect: {
+                rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true,
+            },
+            autoplay: { delay: 2500, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
+        });
+
+        // 4. PARALLAX HORIZONTAL NAS FAIXAS
+        const bgImages = document.querySelectorAll('.js-scroll-bg');
+        function horizontalScrollEffect() {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            bgImages.forEach(bg => {
+                const rect = bg.parentElement.getBoundingClientRect();
+                const elementTop = rect.top;
+                const elementHeight = rect.height;
+                if (elementTop < windowHeight && elementTop + elementHeight > 0) {
+                    const speed = 0.15; 
+                    let xPos = (scrollPosition - (bg.parentElement.offsetTop - windowHeight)) * speed;
+                    if (bg.classList.contains('direction-right')) {
+                        bg.style.transform = `translateX(${xPos}px)`;
+                    } else {
+                        bg.style.transform = `translateX(-${xPos}px)`;
+                    }
+                }
+            });
+        }
+        window.addEventListener('scroll', horizontalScrollEffect);
+
+        // 5. FECHAR MENU MOBILE
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarCollapse = document.getElementById('navbarNav');
+                if (navbarCollapse.classList.contains('show')) {
+                    new bootstrap.Collapse(navbarCollapse).hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corte de Cabelo | Barbearia Imperium</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS GERAIS --- */
+        :root {
+            --color-gold: #D4CDC1;
+            --color-gold-hover: #b8b0a4;
+            --color-red-agenda: #c0392b;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --bg-dark: #111;
+            --bg-card: #1a1a1a;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: var(--font-title);
+            color: var(--color-gold);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: rgba(17, 17, 17, 0.95) !important;
+            border-bottom: 1px solid rgba(212, 205, 193, 0.1);
+            padding: 15px 0;
+        }
+        .navbar-brand { font-weight: 700; letter-spacing: 2px; font-size: 1.5rem; }
+        .nav-link { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.7) !important; }
+        .nav-link:hover { color: var(--color-gold) !important; }
+
+        /* HEADER DA PÁGINA */
+        .page-header {
+            padding: 140px 0 80px;
+            /* Imagem de fundo focada em corte */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('img/banner02.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        /* --- DETALHES DO SERVIÇO --- */
+        .service-intro-img img {
+            border: 2px solid var(--color-gold);
+            padding: 10px;
+            width: 100%;
+            height: auto;
+        }
+
+        /* --- GRID DE ESTILOS (CARDS) --- */
+        .style-card {
+            background-color: var(--bg-card);
+            border: 1px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .style-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.5s ease;
+        }
+
+        .style-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .style-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .style-info p {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        /* Efeito Hover nos Cards */
+        .style-card:hover {
+            border-color: var(--color-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(212, 205, 193, 0.1);
+        }
+
+        .style-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* --- GALERIA SWIPER --- */
+        .swiper {
+            width: 100%;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 400px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Botões */
+        .btn-gold {
+            border: 1px solid var(--color-gold);
+            background-color: var(--color-gold);
+            color: #000;
+            padding: 10px 25px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-gold:hover { background-color: #fff; border-color: #fff; }
+
+        /* Footer */
+        footer { border-top: 1px solid #333; background: #000; padding: 40px 0; margin-top: 50px; }
+
+        /* Botão Flutuante */
+        .btn-floating-agenda {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            width: 65px; height: 65px; border-radius: 50%;
+            background-color: var(--color-red-agenda); color: #fff;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease; animation: pulse-red 2s infinite;
+            text-decoration: none;
+        }
+        .btn-floating-agenda i { font-size: 1.6rem; }
+        .btn-floating-agenda:hover { color: #fff; transform: scale(1.1); }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(192, 57, 43, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index8.html">IMPERIUM</a>
+            <div class="ms-auto">
+                <a href="index8.html" class="nav-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-3">Corte de Cabelo</h1>
+            <p class="text-secondary lead">Visagismo e técnica apurada para o seu estilo.</p>
+        </div>
+    </header>
+
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-6">
+                    <h2 class="display-5 mb-4">A Arte do Corte</h2>
+                    <p class="text-light lead">Não é apenas cortar cabelo. É moldar a sua imagem.</p>
+                    <p class="text-secondary">
+                        Na Barbearia Torres, cada corte começa com uma consultoria de visagismo. Analisamos o formato do seu rosto, tipo de fio e estilo de vida para propor o visual ideal.
+                    </p>
+                    <p class="text-secondary">
+                        Utilizamos técnicas de precisão com tesoura e máquina, finalizando com lavagem especial, massagem capilar e produtos de styling premium.
+                    </p>
+                    <ul class="list-unstyled mt-4 text-white-50">
+                        <li class="mb-2"><i class="bi bi-check-circle text-warning me-2"></i> Consultoria de Visagismo</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-warning me-2"></i> Lavagem e Massagem Capilar</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-warning me-2"></i> Finalização com Produtos Premium</li>
+                    </ul>
+                    <a href="agendamento.html" class="btn btn-gold mt-4">Agendar Corte</a>
+                </div>
+                <div class="col-lg-6 service-intro-img">
+                    <img src="img/IMG8.png" alt="Corte de Cabelo em Andamento">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-black">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5" style="color: var(--color-gold);">Nossos Estilos</h2>
+                <div style="width: 50px; height: 3px; background: var(--color-gold); margin: 15px auto;"></div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="style-card">
+                        <img src="img/IMG12.png" alt="Corte Clássico">
+                        <div class="style-info">
+                            <h4>O Clássico</h4>
+                            <p>Elegância atemporal. Tesoura, laterais comportadas e acabamento impecável.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="style-card">
+                        <img src="img/IMG11.png" alt="Degradê / Fade">
+                        <div class="style-info">
+                            <h4>Fade / Degradê</h4>
+                            <p>O favorito moderno. Transição suave da máquina zero até o topo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="style-card">
+                        <img src="img/IMG10.png" alt="Texturizado">
+                        <div class="style-info">
+                            <h4>Texturizado</h4>
+                            <p>Movimento e desconexão. Ideal para quem gosta de um visual mais despojado.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="style-card">
+                        <img src="img/IMG9.png" alt="Infantil">
+                        <div class="style-info">
+                            <h4>Infantil</h4>
+                            <p>Paciência e técnica para deixar os pequenos com muito estilo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container text-center">
+            <h3 class="mb-4">Inspirações</h3>
+            <p class="text-secondary mb-5">Confira alguns trabalhos realizados por nossa equipe.</p>
+            
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="img/CORT1.png" /></div>
+                    <div class="swiper-slide"><img src="img/CORT2.png" /></div>
+                    <div class="swiper-slide"><img src="img/CORT3.png" /></div>
+                    <div class="swiper-slide"><img src="img/CORT4.png" /></div>
+                    <div class="swiper-slide"><img src="img/CORT5.png" /></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <div class="container">
+            <p class="small text-secondary mb-0">&copy; 2025 Barbearia Imperium. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="agendamento.html" class="btn-floating-agenda" title="Agendar Horário">
+        <i class="bi bi-calendar3"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            loop: true
+        });
+    </script>
+
+</body>
+</html>
